@@ -2,7 +2,6 @@ package com.example.mbareisa.yora.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import com.example.mbareisa.yora.infrastructure.YoraApplication;
 
 public abstract class BaseActivity extends AppCompatActivity {
