@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 //activity is used when user is logged in
 public abstract class BaseAuthenticatedActivity extends BaseActivity {
-//test github
+
     @Override
     protected final void onCreate(Bundle savedState){
         super.onCreate(savedState);
