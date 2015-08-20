@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.mbareisa.yora.R;
+import com.example.mbareisa.yora.fragments.LoginFragment;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginFragment.Callbacks {
+    private static final int REQUEST_NARROW_LOGIN = 1;
+
     private View loginButton;
 
     @Override
@@ -24,6 +27,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         if (view == loginButton)
-            startActivity(new Intent(this, LoginNarrowActivity.class));
+            startActivityForResult(new Intent(this, LoginNarrowActivity.class), REQUEST_NARROW_LOGIN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode != RESULT_OK)
+            return;
+
+        if(requestCode == REQUEST_NARROW_LOGIN)
+            finishLogin();
+    }
+
+    private void finishLogin(){
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
+
+    @Override
+    public void onLoggedIn() {
+        finishLogin();
     }
 }
