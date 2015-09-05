@@ -7,10 +7,12 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.mbareisa.yora.R;
 import com.example.mbareisa.yora.infrastructure.YoraApplication;
+import com.example.mbareisa.yora.views.NavDrawer;
 
 public abstract class BaseActivity extends AppCompatActivity {
     protected YoraApplication application;
     protected Toolbar toolbar;
+    protected NavDrawer navDrawer;
 
     @Override
     protected void onCreate(Bundle savedState){
@@ -28,6 +30,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         if(toolbar != null){
             setSupportActionBar(toolbar);
         }
+    }
+
+    //this is how I track my navDrawer
+    protected void setNavDrawer(NavDrawer drawer){
+        this.navDrawer = drawer;
+        this.navDrawer.create();
     }
 
 }
