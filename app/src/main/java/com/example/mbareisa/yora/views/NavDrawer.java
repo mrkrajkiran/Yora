@@ -1,6 +1,7 @@
 package com.example.mbareisa.yora.views;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -115,7 +116,9 @@ public class NavDrawer {
                 throw new RuntimeException("Nav drawer item " + text + " could not be attached to ViewGroup. View not found.");
             }
 
-            view = inflater.inflate(R.layout.list_item_nav_drawer, container);
+            view = inflater.inflate(R.layout.list_item_nav_drawer, container, false);
+            container.addView(view);
+
             view.setOnClickListener(this);
 
             icon = (ImageView) view.findViewById(R.id.list_item_nav_drawer_icon);
@@ -137,7 +140,6 @@ public class NavDrawer {
 
         @Override
         public void setSelected(boolean isSelected) {
-
             if (isSelected){
                 view.setBackgroundResource(R.drawable.list_item_nav_drawer_selected_item_background);
                 textView.setTextColor(navDrawer.activity.
