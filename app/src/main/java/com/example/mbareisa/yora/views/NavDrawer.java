@@ -1,5 +1,7 @@
 package com.example.mbareisa.yora.views;
 
+import android.content.Intent;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -52,15 +54,15 @@ public class NavDrawer {
 
     }
     public boolean isOpen(){
-        return drawerLayout.isDrawerOpen(Gravity.START);
+        return drawerLayout.isDrawerOpen(GravityCompat.START);
     }
 
     public void setOpen(boolean isOpen){
         if(isOpen){
-            drawerLayout.openDrawer(Gravity.START);
+            drawerLayout.openDrawer(GravityCompat.START);
         }
         else{
-            drawerLayout.closeDrawer(Gravity.START);
+            drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
 
@@ -139,24 +141,43 @@ public class NavDrawer {
                 textView.setTextColor(navDrawer.activity.
                         getResources().
                         getColor(R.color.list_item_nav_drawer_selected_item_text_color));
+            } else
+            {
+                view.setBackground(null);
+                textView.setTextColor(defaultTextColor);
             }
         }
 
         public void setText(String text){
-
+            this.text = text;
+            if (view != null){
+                textView.setText(text);
+            }
         }
 
-        public void setBadge(String badge){
+        public void setBadge(String badge) {
+            this.badge = badge;
+            if (view != null) {
 
+                if (badge != null)
+                    badgeTextView.setVisibility(View.VISIBLE);
+
+                else
+                    badgeTextView.setVisibility(View.GONE);
+            }
         }
 
         public void setIcon(int iconDrawable){
+            this.iconDrawable = iconDrawable;
 
+            if (view != null){
+                icon.setImageResource(iconDrawable);
+            }
         }
 
         @Override
         public void onClick(View v) {
-
+            navDrawer.setSelectedItem(this);
         }
     }
 
@@ -166,6 +187,29 @@ public class NavDrawer {
         public ActivityNavDrawerItem(Class targetActivity, String text, String badge, int iconDrawable, int containerId) {
             super(text, badge, iconDrawable, containerId);
             this.targetActivity = targetActivity;
+        }
+
+        @Override
+        public void inflate(LayoutInflater inflater, ViewGroup navDrawer){
+            super.inflate(inflater, navDrawer);
+
+            if (this.navDrawer.activity.getClass() == targetActivity){
+                this.navDrawer.setSelectedItem(this);
+            }
+        }
+
+        @Override
+        public void onClick(View view){
+            navDrawer.setOpen(false);
+
+            if(navDrawer.activity.getClass() == targetActivity)
+                return;
+
+            super.onClick(view);
+
+            // TODO: animations
+            navDrawer.activity.startActivity(new Intent(navDrawer.activity, targetActivity));
+            navDrawer.activity.finish();
         }
     }
 }
