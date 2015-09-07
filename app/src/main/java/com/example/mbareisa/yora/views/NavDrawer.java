@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,6 +116,8 @@ public class NavDrawer {
             }
 
             view = inflater.inflate(R.layout.list_item_nav_drawer, container);
+            view.setOnClickListener(this);
+
             icon = (ImageView) view.findViewById(R.id.list_item_nav_drawer_icon);
             textView = (TextView) view.findViewById(R.id.list_item_nav_drawer_text);
             badgeTextView = (TextView) view.findViewById(R.id.list_item_nav_drawer_badge);
@@ -136,6 +137,7 @@ public class NavDrawer {
 
         @Override
         public void setSelected(boolean isSelected) {
+
             if (isSelected){
                 view.setBackgroundResource(R.drawable.list_item_nav_drawer_selected_item_background);
                 textView.setTextColor(navDrawer.activity.
